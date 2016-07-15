@@ -17,23 +17,14 @@ Flashlight::Flashlight(QObject *_parent) :
     this->setFlashlightOn(m_flashlightOn);
 
     camera_feature_t features[] = { CAMERA_FEATURE_VIDEOLIGHT };
+    m_cameraUnit = CAMERA_UNIT_REAR;
+    bool flashlightAvailable = camera_has_feature(m_cameraUnit, features);
+    
+    if (flashlightAvailable)
+        Logger::logThis("Rear camera supports flashlight");
+    else
+        Logger::logThis("Rear camera doesn't supports flashlight");
 
-    camera_unit_t next = CAMERA_UNIT_NONE;
-    unsigned int num = 0;
-    camera_unit_t cams[CAMERA_UNIT_NUM_UNITS];
-
-    while (camera_find_capable(features,
-                               sizeof(features)/sizeof(*features),
-                               next,
-                               &next) == CAMERA_EOK) {
-        cams[num++] = next;
-        Logger::logThis("camera unit " + QString::number((int)next) + " supports flashlight");
-    }
-
-    if (num > 0)
-        m_cameraUnit = cams[0];
-
-    bool flashlightAvailable = (m_cameraUnit != CAMERA_HANDLE_INVALID);
     this->setFlashlightAvailableOnDevice(flashlightAvailable);
 }
 
