@@ -19,12 +19,6 @@ Flashlight::Flashlight(QObject *_parent) :
     camera_feature_t features[] = { CAMERA_FEATURE_VIDEOLIGHT };
     m_cameraUnit = CAMERA_UNIT_REAR;
     bool flashlightAvailable = camera_has_feature(m_cameraUnit, features);
-    
-    if (flashlightAvailable)
-        Logger::logThis("Rear camera supports flashlight");
-    else
-        Logger::logThis("Rear camera doesn't supports flashlight");
-
     this->setFlashlightAvailableOnDevice(flashlightAvailable);
 }
 
