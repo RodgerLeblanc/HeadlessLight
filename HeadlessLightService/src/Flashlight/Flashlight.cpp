@@ -16,9 +16,8 @@ Flashlight::Flashlight(QObject *_parent) :
 {
     this->setFlashlightOn(m_flashlightOn);
 
-    camera_feature_t features[] = { CAMERA_FEATURE_VIDEOLIGHT };
     m_cameraUnit = CAMERA_UNIT_REAR;
-    bool flashlightAvailable = camera_has_feature(m_cameraUnit, features);
+    bool flashlightAvailable = camera_has_feature(m_cameraUnit, CAMERA_FEATURE_VIDEOLIGHT);
     this->setFlashlightAvailableOnDevice(flashlightAvailable);
 }
 
